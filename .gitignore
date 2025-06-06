@@ -1,0 +1,21 @@
+# General
+.DS_Store
+*.log
+.env
+.env.*
+
+# IDE - JetBrains
+.idea/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform.lock.hcl
+
+# Node / JavaScript
+node_modules/
+dist/
+build/
+coverage/
