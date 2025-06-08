@@ -7,7 +7,7 @@
       "segments": [
         {
           "properties": {
-            "command": "$parts = @(); $gcpFile = \"$env:APPDATA/gcloud/active_config\"; if (Test-Path $gcpFile) { $gcp = Get-Content $gcpFile; if ($gcp) { $parts += $gcp } }; $conda = $env:CONDA_DEFAULT_ENV; if ($conda) { $parts += $conda }; if ($parts.Count -gt 0) { '[' + ($parts -join '/') + ']' }",
+            "command": "$parts = @(); $gcpAccount = gcloud auth list --filter='status:ACTIVE' --format='value(account)' --quiet; if ($gcpAccount) { $parts += \"$gcpAccount\" }; $conda = $env:CONDA_DEFAULT_ENV; if ($conda) { $parts += \"$conda\" }; if ($parts.Count -gt 0) { '[' + ($parts -join ' | ') + ']' }",
             "shell": "pwsh"
           },
           "template": "{{ .Output }} ",
