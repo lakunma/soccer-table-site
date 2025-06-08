@@ -99,7 +99,7 @@ The `$PROFILE` file is a script that runs every time you open a new PowerShell s
     
     }
     
-    oh-my-posh init pwsh --config '~/work-personal.omp.json' | Invoke-Expression
+    oh-my-posh init pwsh --config '~/.work-personal.omp.yml' | Invoke-Expression
     ```
 
 ### Step 5: Restart Your Terminal

@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+blocks:
+  - type: prompt
+    alignment: left
+    segments:
+      - properties:
+          cache_duration: none
+          display_mode: virtual_env
+          home_enabled: false
+        template: "\U0001F40D {{ .Venv }} "
+        foreground: '#6272A4'
+        type: python
+        style: plain
+      - properties:
+        type: gcp
+        style: powerline
+        powerline_symbol: 
+        foreground: "#ffffff"
+        background: "#47888d"
+        template: "☁️ {{.Project}} :: {{.Account}} "
+      - properties:
+          cache_duration: none
+          style: agnoster_full
+        template: "\U0001F4C1 {{ .Path }} "
+        foreground: '#8BE9FD'
+        type: path
+        style: plain
+      - properties:
+          cache_duration: none
+          fetch_status: true
+        template: ⎇ {{ .HEAD }}{{ if .Staging.Changed }}<#FFB86C>S</>{{ end }}{{ if .Working.Changed }}<#FF5555>W</>{{ end }}
+        foreground: '#50FA7B'
+        type: git
+        style: plain
+  - type: prompt
+    alignment: left
+    segments:
+      - properties:
+          cache_duration: none
+        template: ❯
+        foreground: '#F8F8F2'
+        type: text
+        style: plain
+    newline: true
+version: 3
+final_space: true
