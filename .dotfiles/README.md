@@ -1,4 +1,4 @@
-# My PowerShell Environment Setup for Windows
+# PowerShell Environment Setup for Windows
 
 This folder contains the configuration for a safe, productive, and beautiful PowerShell environment specifically tailored for developers working on Windows.
 
@@ -29,49 +29,75 @@ Oh My Posh is not just a simple theme; it's a full-fledged engine that can dynam
 
 ---
 
-## How to Set It Up on Windows
+## ⚙️ Core Requirements (Prerequisites)
 
-Follow these steps to configure your environment.
+Before installation, ensure you have the correct tools. We strongly recommend using **Scoop** to manage them.
 
-### Step 1: Prerequisites - Install Scoop
+### 1. PowerShell 7+ (Critical)
+The default "Windows PowerShell 5" is outdated. You need **PowerShell 7** for modern features, performance, and proper Unicode/icon support.
 
-We use **Scoop**, a command-line installer for Windows, to manage our tools cleanly. If you don't have it, install it first.
+*   **Install with Scoop:**
+    ```powershell
+    scoop install pwsh
+    ```
 
-1.  Open PowerShell.
+### 2. Windows Terminal (Highly Recommended)
+This is the best modern terminal application for Windows.
+
+*   **Install with Scoop:**
+    ```powershell
+    scoop install wt
+    ```
+
+### 3. Scoop Package Manager
+If you don't have Scoop, install it first.
+
+1.  Open PowerShell 7.
 2.  Run the following commands:
     ```powershell
     Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
     irm get.scoop.sh | iex
     ```
 
-### Step 2: Run the Automated Installer
+> **Note for Conda Users:**
+> A known issue exists where `conda` commands can fail inside PowerShell 7.5+. To fix this, you must update `conda` to at least version `25.1+`. Run the following command from an Anaconda Prompt: `conda update -n base conda`
 
-This repository includes a script that will install Oh My Posh and the required Nerd Font using Scoop.
+---
 
-1.  Open PowerShell **as Administrator**.
-2.  Navigate to this `.dotfiles` directory.
+## 🚀 Installation & Configuration
+
+### Step 1: Run the Automated Installer
+This repository includes a script that will install Oh My Posh and a required Nerd Font using Scoop.
+
+1.  Open PowerShell 7 **as Administrator**.
+2.  Navigate to this directory.
 3.  Run the setup script:
     ```powershell
     .\setup-shell.ps1
     ```
 
+### Step 2: Set PowerShell 7 as your Default Terminal
+To ensure you always get the best experience, make PowerShell 7 your default profile in Windows Terminal.
+
+1.  In Windows Terminal, open Settings (`Ctrl` + `,`).
+2.  In the "Startup" section, set the "Default profile" to **PowerShell** (the one with the dark blue icon, not the light blue "Windows PowerShell" icon).
+
 ### Step 3: Configure Your Terminal Font (Critical!)
+You **must** set your terminal's font to a Nerd Font for the icons to display correctly.
 
-After the installer finishes, you **must** set your terminal's font to a Nerd Font for the icons to display correctly.
-
-1.  Open the settings for your terminal (e.g., Windows Terminal, VS Code).
-2.  Change the font for your PowerShell profile to **`FiraCode NF`** or another font ending in `NF`.
+1.  In Windows Terminal Settings, go to the **PowerShell** profile.
+2.  Click on the "Appearance" tab.
+3.  Change the "Font face" to **`FiraCode NF`** or another font ending in `NF`.
+4.  Save your settings.
 
 ### Step 4: Configure Your PowerShell Profile
+The `$PROFILE` file runs every time you open PowerShell. We will configure it to use our safety script and custom prompt.
 
-The `$PROFILE` file is a script that runs every time you open a new PowerShell session. We will configure it to use our safety script and custom prompt.
-
-1.  Open your profile file for editing:
+1.  Open your profile file for editing from a PowerShell 7 terminal:
     ```powershell
     notepad $PROFILE
     ```
-
-2.  **Delete everything currently in that file** and replace it with the single, consolidated block of code below.
+2.  **Delete everything currently in that file** and replace it with the exact block of code below. This ensures a clean, predictable setup.
 
     ```powershell
     # ===================================================================
@@ -93,15 +119,18 @@ The `$PROFILE` file is a script that runs every time you open a new PowerShell s
         gcloud config configurations list
         Write-Host "Use the following command to switch between configurations:  gcloud config configurations activate <profile name>"
     
-        gcloud auth revoke --all
-        Write-Host "[GCP Security] ✅ All GCP accounts have been logged out. A clean slate." -ForegroundColor Cyan
-        Write-Host "[GCP Security]    Run 'gcloud auth login' and 'gcloud auth application-default login' to begin a session." -ForegroundColor DarkGray
+        Write-Host "[GCP Security]    Run 'gcloud config configurations activate' and 'gcloud auth application-default login' to begin a session." -ForegroundColor DarkGray
     
     }
     
+    # ===================================================================
+    #  Oh My Posh Initialization
+    #  This loads the custom prompt theme. It must come AFTER the safety check.
+    # ===================================================================
     oh-my-posh init pwsh --config '~/.work-personal.omp.yml' | Invoke-Expression
+
     ```
 
 ### Step 5: Restart Your Terminal
 
-Close and reopen PowerShell. Your new, safe, and beautiful environment is now fully configured and ready to use!
+Close and reopen Windows Terminal. Your new, safe, and beautiful environment is now fully configured and ready to use
