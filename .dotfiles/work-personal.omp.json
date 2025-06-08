@@ -1,0 +1,56 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "properties": {
+            "command": "$parts = @(); $gcpFile = \"$env:APPDATA/gcloud/active_config\"; if (Test-Path $gcpFile) { $gcp = Get-Content $gcpFile; if ($gcp) { $parts += $gcp } }; $conda = $env:CONDA_DEFAULT_ENV; if ($conda) { $parts += $conda }; if ($parts.Count -gt 0) { '[' + ($parts -join '/') + ']' }",
+            "shell": "pwsh"
+          },
+          "template": "{{ .Output }} ",
+          "foreground": "#FFB86C",
+          "type": "command",
+          "style": "plain"
+        },
+        {
+          "properties": {
+            "home_icon": "~",
+            "max_depth": 3,
+            "style": "mixed"
+          },
+          "template": "\uf115 {{ .Path }} ",
+          "foreground": "#8BE9FD",
+          "type": "path",
+          "style": "plain"
+        },
+        {
+          "properties": {
+            "fetch_status": true
+          },
+          "template": "{{ .HEAD }}{{ if .Staging.Changed }} <#FF5555>S</>{{ end }}{{ if .Working.Changed }} <#FF5555>W</>{{ end }}",
+          "foreground": "#50FA7B",
+          "type": "git",
+          "style": "plain"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "template": "❯",
+          "foreground": "#F8F8F2",
+          "type": "text",
+          "style": "plain"
+        }
+      ],
+      "newline": true
+    }
+  ],
+  "version": 3,
+  "final_space": true
+}
