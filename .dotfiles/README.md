@@ -75,21 +75,31 @@ The `$PROFILE` file is a script that runs every time you open a new PowerShell s
 
     ```powershell
     # ===================================================================
-    #  Custom PowerShell Environment Initialization
+    #  GCP Configuration Safety Check
+    #  This ensures every new PowerShell session starts with the 'safe-default'
+    #  GCP configuration active to prevent accidental commands.
     # ===================================================================
-
-    # --- GCP Configuration Safety Check ---
-    # This ensures every new PowerShell session starts with the 'safe-default'
-    # GCP configuration active to prevent accidental commands.
+    
+    # Check if the gcloud command exists before trying to use it
     if (Get-Command gcloud -ErrorAction SilentlyContinue) {
+    
+        # Set the active configuration to 'safe-default'
         gcloud config configurations activate safe-default
-        # A subtle, fast message confirms the safety net is active.
-        Write-Host "[GCP] Switched to 'safe-default' configuration." -ForegroundColor DarkGray
+    
+        # Optional: Print a confirmation message so you know it's working.
+        # The color makes it stand out.
+        Write-Host "[GCP] Active configuration has been set to 'safe-default'." -ForegroundColor DarkGray
+        Write-Host "See defined gcloud configurations:"
+        gcloud config configurations list
+        Write-Host "Use the following command to switch between configurations:  gcloud config configurations activate <profile name>"
+    
+        gcloud auth revoke --all
+        Write-Host "[GCP Security] ✅ All GCP accounts have been logged out. A clean slate." -ForegroundColor Cyan
+        Write-Host "[GCP Security]    Run 'gcloud auth login' and 'gcloud auth application-default login' to begin a session." -ForegroundColor DarkGray
+    
     }
-
-    # --- Oh My Posh Custom Prompt Initialization ---
-    # This line loads our beautiful, custom prompt theme from the .dotfiles directory.
-    oh-my-posh init pwsh --config '~/.dotfiles/work-personal.omp.json' | Invoke-Expression
+    
+    oh-my-posh init pwsh --config '~/work-personal.omp.json' | Invoke-Expression
     ```
 
 ### Step 5: Restart Your Terminal
