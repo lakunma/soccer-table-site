@@ -27,27 +27,27 @@ app.get('/', (req, res) => {
 });
 
 // An endpoint to get all clubs from the 'clubs' collection
-app.get('/api/clubs', async (req, res) => {
+app.get('/api/team', async (req, res) => {
     try {
-        const clubsCollection = firestore.collection('clubs');
-        const snapshot = await clubsCollection.get();
+        const teamCollection = firestore.collection('team');
+        const snapshot = await teamCollection.get();
 
         if (snapshot.empty) {
-            res.status(404).json({ error: 'No clubs found' });
+            res.status(404).json({ error: 'No teams found' });
             return;
         }
 
-        const clubs = [];
+        const teams = [];
         snapshot.forEach(doc => {
             // We combine the document's auto-generated ID with its data
-            clubs.push({ id: doc.id, ...doc.data() });
+            teams.push({ id: doc.id, ...doc.data() });
         });
 
-        res.status(200).json(clubs);
+        res.status(200).json(teams);
 
     } catch (error) {
-        console.error("Error fetching clubs:", error);
-        res.status(500).json({ error: 'Failed to fetch clubs' });
+        console.error("Error fetching teams:", error);
+        res.status(500).json({ error: 'Failed to fetch teams' });
     }
 });
 
