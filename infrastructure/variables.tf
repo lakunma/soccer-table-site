@@ -47,8 +47,14 @@ variable "github_repo_name" {
   default     = "soccer-table-site"
 }
 
-variable "github_full_repo_name" {
-  description = "The full name of the repo including the owner (e.g., owner/repo)."
+variable "github_app_installation_id" {
+  description = "The GitHub App installation ID for Cloud Build integration. You can find this in your GitHub App settings."
+  type        = number
+  sensitive   = true
+}
+
+variable "github_oauth_token" {
+  description = "GitHub OAuth token for repository access. Generate this from GitHub Settings > Developer settings > Personal access tokens."
   type        = string
-  default     = "lakunma/soccer-table-site"
+  sensitive   = true
 }

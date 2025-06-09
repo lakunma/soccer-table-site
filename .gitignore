@@ -7,12 +7,25 @@
 # IDE - JetBrains
 .idea/
 
-# Terraform
-.terraform/
-*.tfstate
-*.tfstate.backup
+# Terraform files to ignore
 *.tfvars
+*.tfvars.json
+terraform.tfstate
+terraform.tfstate.*
+.terraform/
 .terraform.lock.hcl
+*.tfplan
+*.tfplan.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, which are likely to contain sensitive data
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 
 # Node / JavaScript
 node_modules/
